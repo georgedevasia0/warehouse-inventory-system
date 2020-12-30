@@ -5,6 +5,7 @@
       <span>Dashboard</span>
     </a>
   </li>
+  <!--
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-user"></i>
@@ -15,6 +16,7 @@
       <li><a href="users.php">Manage Users</a> </li>
    </ul>
   </li>
+  -->
   <li>
     <a href="categorie.php" >
       <i class="glyphicon glyphicon-indent-left"></i>
@@ -31,12 +33,14 @@
        <li><a href="add_product.php">Add product</a> </li>
    </ul>
   </li>
+  <!--
   <li>
     <a href="media.php" >
       <i class="glyphicon glyphicon-picture"></i>
       <span>Meadias</span>
     </a>
   </li>
+  -->
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-list"></i>
