@@ -3,7 +3,6 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   page_require_level(1);
-  
   $all_categories = find_all('categories')
 ?>
 <?php
@@ -12,7 +11,13 @@
    validate_fields($req_field);
    $cat_name = remove_junk($db->escape($_POST['categorie-name']));
    if(empty($errors)){
-      $sql  = "INSERT INTO categories (name)";
+     $check="Select * from categories where name ="."'{$cat_name}'";
+     $result=$db->query($check);
+     if ($result->num_rows > 0) {
+      $session->msg("d", "category name already exists.");
+        redirect('categorie.php',false);
+}
+      else{$sql  = "INSERT INTO categories (name)";
       $sql .= " VALUES ('{$cat_name}')";
       if($db->query($sql)){
         $session->msg("s", "Successfully Added Categorie");
@@ -20,7 +25,7 @@
       } else {
         $session->msg("d", "Sorry Failed to insert.");
         redirect('categorie.php',false);
-      }
+      }}
    } else {
      $session->msg("d", $errors);
      redirect('categorie.php',false);
