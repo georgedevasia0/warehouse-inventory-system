@@ -42,10 +42,21 @@
            redirect('add_sale.php',false);
         }
   }
-
+  $query  = "select * from products";
+  $items=$db->query($query);
+  echo '<script>items=[]</script>';
+  while($row=$items->fetch_assoc()){
+    echo '<script>item=[]</script>';
+    echo '<script>item.push("'.$row["id"].'" )</script>';
+    echo '<script>item.push("'.$row["name"].'" )</script>';
+    echo '<script>item.push("'.$row["quantity"].'" )</script>';
+    echo '<script>item.push("'.$row["sale_price"].'" )</script>';
+    echo '<script>items.push(item)</script>';
+    
+  }
+  echo '<script>console.log(items)</script>';
 ?>
 <?php include_once('layouts/header.php'); ?>
-
 
   <div class="container">
 		<div class="row">
@@ -82,55 +93,89 @@
       </div>
       <div class="panel-body">
         <form method="post" action="add_sale.php">
-         <table class="table table-bordered">
+         <table id=item_table class="table table-bordered">
             <thead>
               <th> Item </th>
               <th> Price </th>
               <th> Qty </th>
               <th> Total </th>
-              <th> Date</th>
               <th> Action</th>
             </thead>
-            <tbody> 
+            <tbody id='item_body'> 
+            
               <td>
                   <div class="row ">
                     <div class="col-sm-12 col-md-12 col-lg-12 ">
                             <form>
                               <div class="form-label-group">
                                   <!--<label for="inputEmail">Country <span class="required">*</span></label>-->
-                                  <select  name="select2" id="select2" class="form-control">
+                                  <select onchange="print_price()"  name="select2" id="select2" class="form-control">
                                       <option value="">Choose Item</option>
-                                      <?php
-                                      if ($countries->num_rows>0){
-                                          while ($country = $countries->fetch_object()){ ?>
-                                              <option value="<?php echo $country->code;?>"><?php echo $country->countryname;?></option>
-                                         <?php  }
-                                      }
-                                      ?>
                                   </select>
                               </div> 
                             </form>
                     </div>
                 </div>
               </td>
+              <td id='price'>
+              
+              <td ><input id=qty type='number' oninput="print_total();" value=1 ></td>
+              <td id='total'></td>
               <td>
-              1123
-              <td><input type='number' min='1'></td>
-              <td></td>
-              <td></td>
-              <td>
-              <button type="reset" class="btn btn-danger">Reset</button>
-              <button  class="btn btn-primary">Add Item</button>
+              <button onclick=add_item(); class="btn btn-primary">Add Item</button>
              </td>
             </tbody>
          </table>
        </form>
+       <button onclick=checkout();>checkout</button>
       </div>
     </div>
   </div>
 
 </div>
 <script type="text/javascript">
+function reset(){
+  event.preventDefault();
+  document.getElementById('select2').value="";
+}
+function add_item(){
+  event.preventDefault();
+  var table = document.getElementById("item_table");
+
+// Create an empty <tr> element and add it to the 1st position of the table:
+var row = table.insertRow(1);
+
+// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+var cell1 = row.insertCell(0);
+var cell2 = row.insertCell(1);
+var cell3 = row.insertCell(2);
+var cell4=row.insertCell(3);
+var cell5=row.insertCell(4);
+var cell6=row.insertCell(5);
+// Add some text to the new cells:
+
+cell1.innerHTML = "Item";
+cell2.innerHTML = document.getElementById('select2').value;
+cell3.innerHTML=document.getElementById('qty').value;
+cell4.innerHTML=document.getElementById('total').innerHTML;
+button = document.createElement('button');
+button.innerHTML='delete';
+button.onclick=function(){
+  event.preventDefault();
+
+
+}
+cell5.appendChild(button);
+}
+selection=document.getElementById('select2');
+console.log(items);
+for(var i =0;i<items.length;i++){
+  option=document.createElement('option');
+  option.setAttribute('value',items[i][3]);
+  option.innerHTML=items[i][1];
+  selection.appendChild(option);
+}
+data=[];
     $("#select2").select2({
         templateResult: formatState
     });
@@ -144,6 +189,19 @@
         );
         return $state;
     }
+    function print_price(){
+      price=document.getElementById('select2').value;
+      document.getElementById('price').innerHTML=price;
+      document.getElementById('total').innerHTML=price;
+    }
+    function print_total(){
+      if( document.getElementById('qty').value<1){
+        document.getElementById('qty').value=1;
+      };
+      qt=document.getElementById('qty').value;
+      document.getElementById('total').innerHTML=qt*document.getElementById('select2').value;
+    }
+
 </script>
 </body>
 </html>
