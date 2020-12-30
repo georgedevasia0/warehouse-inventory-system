@@ -9,9 +9,9 @@
  $c_product       = count_by_id('products');
  $c_sale          = count_by_id('sales');
  $c_user          = count_by_id('users');
- $products_sold   = find_higest_saleing_product('10');
- $recent_products = find_recent_product_added('5');
- $recent_sales    = find_recent_sale_added('5')
+ $products_sold   = find_higest_saleing_product('2');
+ $recent_products = find_recent_product_added('2');
+ $recent_sales    = find_recent_sale_added('2')
 ?>
 <?php include_once('layouts/header.php'); ?>
 
@@ -20,19 +20,7 @@
      <?php echo display_msg($msg); ?>
    </div>
 </div>
-  <div class="row">
-    <div class="col-md-3">
-       <div class="panel panel-box clearfix">
-         <div class="panel-icon pull-left bg-green">
-          <i class="glyphicon glyphicon-user"></i>
-        </div>
-        <div class="panel-value pull-right">
-          <h2 class="margin-top"> <?php  echo $c_user['total']; ?> </h2>
-          <p class="text-muted">Users</p>
-        </div>
-       </div>
-    </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-red">
           <i class="glyphicon glyphicon-list"></i>
@@ -43,7 +31,7 @@
         </div>
        </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-blue">
           <i class="glyphicon glyphicon-shopping-cart"></i>
@@ -54,7 +42,7 @@
         </div>
        </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-yellow">
           <i class="glyphicon glyphicon-usd"></i>
@@ -66,25 +54,15 @@
        </div>
     </div>
 </div>
-  <div class="row">
-   <div class="col-md-12">
-      <div class="panel">
-        <div class="jumbotron text-center">
-           <h1>Thank You! for your support and love.</h1>
-           <p> <strong>OSWA-INV v2</strong> way more better then <strong> v1 </strong>.
-           </br>If you have a question regarding the usage of this applications, please ask on <a href="https://www.facebook.com/oswapp" title="Facebook" target="_blank">Facebook</a> OSWA Fan page.</p>
-
-        </div>
-      </div>
-   </div>
-  </div>
-  <div class="row">
-   <div class="col-md-4">
+  
+  
+  <div class="row" style="padding:0 30px">
+   <div class="col-md-6">
      <div class="panel panel-default">
        <div class="panel-heading">
          <strong>
-           <span class="glyphicon glyphicon-th"></span>
-           <span>Highest Saleing Products</span>
+           <span  style="color:#FF7857" class="glyphicon glyphicon-th"></span>
+           <span>Highest Saling Products</span>
          </strong>
        </div>
        <div class="panel-body">
@@ -109,11 +87,11 @@
        </div>
      </div>
    </div>
-   <div class="col-md-4">
+   <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
           <strong>
-            <span class="glyphicon glyphicon-th"></span>
+            <span  style="color:#FF7857" class="glyphicon glyphicon-th"></span>
             <span>LATEST SALES</span>
           </strong>
         </div>
@@ -146,43 +124,48 @@
     </div>
    </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
         <strong>
-          <span class="glyphicon glyphicon-th"></span>
+          <span  style="color:#FF7857" class="glyphicon glyphicon-th"></span>
           <span>Recently Added Products</span>
         </strong>
       </div>
       <div class="panel-body">
-
-        <div class="list-group">
-      <?php foreach ($recent_products as  $recent_product): ?>
-            <a class="list-group-item clearfix" href="edit_product.php?id=<?php echo    (int)$recent_product['id'];?>">
-                <h4 class="list-group-item-heading">
-                 <?php if($recent_product['media_id'] === '0'): ?>
-                    <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
-                  <?php else: ?>
-                  <img class="img-avatar img-circle" src="uploads/products/<?php echo $recent_product['image'];?>" alt="" />
-                <?php endif;?>
-                <?php echo remove_junk(first_character($recent_product['name']));?>
-                  <span class="label label-warning pull-right">
-                 $<?php echo (int)$recent_product['sale_price']; ?>
-                  </span>
-                </h4>
-                <span class="list-group-item-text pull-right">
-                <?php echo remove_junk(first_character($recent_product['categorie'])); ?>
-              </span>
-          </a>
-      <?php endforeach; ?>
+      <table class="table table-striped table-bordered table-condensed">
+      <thead>
+         <tr>
+           <th class="text-center" style="width: 50px;">#</th>
+           <th>Product</th>
+           <th>Price</th>
+           <th>category</th>
+         </tr>
+       </thead>
+        <tbody>
+         <?php $i=1;foreach ($recent_products as  $recent_product): ?>
+          <a href="edit_product.php?id=<?php echo (int)$recent_product['id'];?>">
+          <tr>
+          <td class="text-center"><?php echo $i;?></td>
+            <td><?php echo remove_junk(first_character($recent_product['name']));?></td>
+            <td>
+             <?php echo (int)$recent_product['sale_price']; ?>
+            </td>
+            <td><?php echo remove_junk(first_character($recent_product['categorie'])); ?></td>
+           </tr>
+           </a>
+          <?php $i++;endforeach; ?>
+        </tbody>
+        </table>
     </div>
   </div>
  </div>
 </div>
- </div>
-  <div class="row">
 
+<div class="row">
+          <p class="text-center">Powered By <span class="text-primary">Foxiton<span></p>
   </div>
+</div>
 
 
 

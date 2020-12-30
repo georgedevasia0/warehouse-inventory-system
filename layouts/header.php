@@ -16,10 +16,14 @@
   <body>
   <?php  if ($session->isUserLoggedIn(true)): ?>
     <header id="header">
-      <div class="logo pull-left"> OSWA - Inventory </div>
+      <div class="logo pull-left" style="height:100%;"> 
+      <img style="height:50px;padding:15px 5px 1px 5px;" src="libs/images/foxiton1.png">
+      </div>
       <div class="header-content">
-      <div class="header-date pull-left">
-        <strong><?php echo date("F j, Y, g:i a");?></strong>
+      <div class="header-date pull-left" style="color:black">
+        <strong><?php 
+        date_default_timezone_set('Asia/Kolkata');
+        echo date("F j, Y, g:i a");?></strong>
       </div>
       <div class="pull-right clearfix">
         <ul class="info-menu list-inline list-unstyled">
