@@ -82,6 +82,7 @@
                     </select>
                   </div>
                   <div class="col-md-6">
+                  <!--
                     <select class="form-control" name="product-photo">
                       <option value="">Select Product Photo</option>
                     <?php  foreach ($all_photo as $photo): ?>
@@ -89,6 +90,7 @@
                         <?php echo $photo['file_name'] ?></option>
                     <?php endforeach; ?>
                     </select>
+                    -->
                   </div>
                 </div>
               </div>
