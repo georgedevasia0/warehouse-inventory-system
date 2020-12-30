@@ -7,7 +7,7 @@
   <?php
   $user_id = (int)$_GET['id'];
   if(empty($user_id)):
-    redirect('home.php',false);
+    redirect('admin.php',false);
   else:
     $user_p = find_by_id('users',$user_id);
   endif;

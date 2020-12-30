@@ -12,8 +12,8 @@ if(empty($errors)){
      $session->login($user_id);
     //Update Sign in time
      updateLastLogIn($user_id);
-     $session->msg("s", "Welcome to OSWA-INV.");
-     redirect('home.php',false);
+     $session->msg("s", "Welcome to Foxiton Admin Panel.");
+     redirect('admin.php',false);
 
   } else {
     $session->msg("d", "Sorry Username/Password incorrect.");

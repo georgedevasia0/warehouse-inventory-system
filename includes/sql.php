@@ -194,13 +194,13 @@ function tableExists($table){
       //if Group status Deactive
      elseif($login_level['group_status'] === '0'):
            $session->msg('d','This level user has been band!');
-           redirect('home.php',false);
+           redirect('admin.php',false);
       //cheackin log in User level and Require level is Less than or equal to
      elseif($current_user['user_level'] <= (int)$require_level):
               return true;
       else:
             $session->msg("d", "Sorry! you dont have permission to view the page.");
-            redirect('home.php', false);
+            redirect('admin.php', false);
         endif;
 
      }
