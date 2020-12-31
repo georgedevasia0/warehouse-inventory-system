@@ -133,6 +133,20 @@
 						<textarea rows="4" class="form-control website" id="address" placeholder="Address"></textarea>
 					</div>
 				</div>
+				<div class="col-md-9">
+					<div class="form-group">
+						<div class="checkbox">
+      						<label><input type="checkbox" value="" checked><b>GST Included</b></label>
+    					</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<div class="checkbox">
+							<label for="name"> <b>Total: 7500</b></label>
+    					</div>
+					</div>
+				</div>
 			</div>
         </div>
         <div class="modal-footer">

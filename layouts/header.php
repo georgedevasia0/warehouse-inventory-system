@@ -1,4 +1,16 @@
 <?php $user = current_user(); ?>
+<script type="text/javascript">
+    window.onload = startInterval;
+    function startInterval()
+    {
+        setInterval("startTime();",1000);
+    }
+    
+    function startTime()
+    {
+        document.getElementById('time').innerHTML = Date();  
+    }
+  </script>
 <!DOCTYPE html>
   <html lang="en">
     <head>
@@ -20,7 +32,7 @@
       <img style="height:50px;padding:15px 5px 1px 5px;" src="libs/images/foxiton1.png">
       </div>
       <div class="header-content">
-      <div class="header-date pull-left" style="color:black">
+      <div class="header-date pull-left" id="time" style="color:black">
         <strong><?php 
         date_default_timezone_set('Asia/Kolkata');
         echo date("F j, Y, g:i a");?></strong>
