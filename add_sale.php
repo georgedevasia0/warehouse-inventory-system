@@ -8,6 +8,7 @@
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
 </head>
 <body>
@@ -42,35 +43,22 @@
            redirect('add_sale.php',false);
         }
   }
-
+  $query  = "select * from products";
+  $items=$db->query($query);
+  echo '<script>items=[]</script>';
+  while($row=$items->fetch_assoc()){
+    echo '<script>item=[]</script>';
+    echo '<script>item.push("'.$row["id"].'" )</script>';
+    echo '<script>item.push("'.$row["name"].'" )</script>';
+    echo '<script>item.push("'.$row["quantity"].'" )</script>';
+    echo '<script>item.push("'.$row["sale_price"].'" )</script>';
+    echo '<script>items.push(item)</script>';
+    
+  }
+  echo '<script>console.log(items)</script>';
 ?>
 <?php include_once('layouts/header.php'); ?>
 
-
-  <div class="container">
-		<div class="row">
-			<div class="col-md-6">
-				<div class="row well"  style="background-color:white;">
-					<h3 class="text-primary font-weight-bold" style="font-weight:700">Recipient Details</h3><hr style="border-top: 1px solid #3498DB;">
-
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group">
-								<label for="name">Name:</label>
-								<input type="text" class="form-control organisation" id="name" placeholder="Name">
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="form-group">
-								<label for="addres">Address</label>
-								<textarea rows="4" class="form-control website" id="address" placeholder="Address"></textarea>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-    </div>
-  </div>
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-default">
@@ -82,55 +70,155 @@
       </div>
       <div class="panel-body">
         <form method="post" action="add_sale.php">
-         <table class="table table-bordered">
-            <thead>
+         <table id=item_table class="table table-bordered">
+            <thead id='head'>
               <th> Item </th>
               <th> Price </th>
-              <th> Qty </th>
+              <th> Quantity </th>
               <th> Total </th>
-              <th> Date</th>
               <th> Action</th>
             </thead>
-            <tbody> 
-              <td>
+            <tbody id='item_body'> 
+            
+              <td  style="width:250px;">
                   <div class="row ">
                     <div class="col-sm-12 col-md-12 col-lg-12 ">
                             <form>
                               <div class="form-label-group">
                                   <!--<label for="inputEmail">Country <span class="required">*</span></label>-->
-                                  <select  name="select2" id="select2" class="form-control">
+                                  <select onchange="print_price()"  name="select2" id="select2" class="form-control">
                                       <option value="">Choose Item</option>
-                                      <?php
-                                      if ($countries->num_rows>0){
-                                          while ($country = $countries->fetch_object()){ ?>
-                                              <option value="<?php echo $country->code;?>"><?php echo $country->countryname;?></option>
-                                         <?php  }
-                                      }
-                                      ?>
                                   </select>
                               </div> 
                             </form>
                     </div>
                 </div>
               </td>
+              <td id='price'  style="width:150px;">
+              
+              <td style="width:50px;"><input id=qty type='number' oninput="print_total();" value=1 ></td>
+              <td id='total' style="width:150px;"></td>
               <td>
-              1123
-              <td><input type='number' min='1'></td>
-              <td></td>
-              <td></td>
-              <td>
-              <button type="reset" class="btn btn-danger">Reset</button>
-              <button  class="btn btn-primary">Add Item</button>
+              <button onclick=add_item(); class="btn btn-primary"><i class="fas fa-plus"></i> Add Item</button>
              </td>
             </tbody>
          </table>
        </form>
+       <button class="btn btn-success col-lg-3" id="myAnchor" data-toggle="modal" data-target="#myModal"><i class="fas fa-cart-plus"></i> Checkout</button>
       </div>
     </div>
   </div>
-
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="text-primary font-weight-bold text-center" style="font-weight:700">Recipient Details</h3>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label for="name"><i class="fas fa-user" style="color:#07BCFC"></i> Name:</label>
+						<input type="text" class="form-control organisation" id="name" placeholder="Name">
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<label for="addres"><i class="fas fa-map-marker-alt"  style="color:#07BCFC"></i> Address</label>
+						<textarea rows="4" class="form-control website" id="address" placeholder="Address"></textarea>
+					</div>
+				</div>
+			</div>
+        </div>
+        <div class="modal-footer">
+        
+        <button type="button" class="btn btn-primary"><i class="far fa-copy"></i> Print Reciept</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> Close</button>
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
 <script type="text/javascript">
+products=[]
+var table = document.getElementById("item_table");
+function reset(){
+  event.preventDefault();
+  document.getElementById('select2').value="";
+}
+document.getElementById("myAnchor").addEventListener("click", function(event){
+  event.preventDefault()
+});
+function add_item(){
+  event.preventDefault();
+  
+var sel = document.getElementById("select2");
+if (sel.value==""){
+  return 
+}
+var text= sel.options[sel.selectedIndex].text;
+for(var i=0;i<products.length;i++){
+  console.log(products.length);
+  if(products[i][0]==text){
+    alert('item already exits');
+    return;
+  }
+}
+  index=document.getElementById('select2').selectedIndex; 
+  var table = document.getElementById("item_table");
+var row = table.insertRow(products.length+1);
+row.setAttribute('id',index);
+var cell1 = row.insertCell(0);
+var cell2 = row.insertCell(1);
+var cell3 = row.insertCell(2);
+var cell4=row.insertCell(3);
+var cell5=row.insertCell(4);
+cell1.innerHTML = text;
+cell2.innerHTML = document.getElementById('select2').value;
+cell3.innerHTML=document.getElementById('qty').value;
+cell4.innerHTML=document.getElementById('total').innerHTML;
+product=[];
+product.push(text);
+product.push(cell2.innerHTML);
+product.push(cell3.innerHTML);
+products.push(product);
+button = document.createElement('button');
+button.classList.add('btn','btn-danger');
+button.innerHTML='<i class="fas fa-trash"></i> Delete';
+button.onclick=function(){
+  event.preventDefault();
+  row=this.parentNode.parentNode;
+  item=this.parentNode.parentNode.firstChild.innerHTML;
+  if (products.length==1){
+    products=[];
+    table.deleteRow(1);
+  }
+  else{
+    console.log(products);
+  for(var j=0;j<products.length;j++){
+    if (products[j][0]==item){
+      products.splice(j,1);
+      table.deleteRow(j+1);
+    }
+  }}
+}
+cell5.appendChild(button);
+}
+selection=document.getElementById('select2');
+console.log(items);
+for(var i =0;i<items.length;i++){
+  option=document.createElement('option');
+  option.setAttribute('value',items[i][3]);
+  option.innerHTML=items[i][1];
+  selection.appendChild(option);
+}
+data=[];
     $("#select2").select2({
         templateResult: formatState
     });
@@ -140,10 +228,23 @@
         }
         var baseUrl = "flags";
         var $state = $(
-            '<span><img src="' + baseUrl + '/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
+            '<span>' + state.text + '</span>'
         );
         return $state;
     }
+    function print_price(){
+      price=document.getElementById('select2').value;
+      document.getElementById('price').innerHTML=price;
+      document.getElementById('total').innerHTML=price;
+    }
+    function print_total(){
+      if( document.getElementById('qty').value<1){
+        document.getElementById('qty').value=1;
+      };
+      qt=document.getElementById('qty').value;
+      document.getElementById('total').innerHTML=qt*document.getElementById('select2').value;
+    }
+
 </script>
 </body>
 </html>
