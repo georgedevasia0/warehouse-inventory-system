@@ -7,12 +7,17 @@
   $all_photo = find_all('media');
 ?>
 <?php
+$type_query="Select name from type";
+$type_result=$db->query($type_query);
+
+
  if(isset($_POST['add_product'])){
    $req_fields = array('product-title','product-categorie','product-quantity','buying-price', 'saleing-price' );
    validate_fields($req_fields);
    if(empty($errors)){
      $p_name  = remove_junk($db->escape($_POST['product-title']));
      $p_cat   = remove_junk($db->escape($_POST['product-categorie']));
+     $p_type   = remove_junk($db->escape($_POST['product-type']));
      $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
      $p_buy   = remove_junk($db->escape($_POST['buying-price']));
      $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
@@ -23,9 +28,9 @@
      }
      $date    = make_date();
      $query  = "INSERT INTO products (";
-     $query .=" name,quantity,buy_price,sale_price,categorie_id,media_id,date";
+     $query .=" name,quantity,buy_price,sale_price,type,categorie_id,media_id,date";
      $query .=") VALUES (";
-     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$date}'";
+     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}','{$p_type}' ,'{$p_cat}', '{$media_id}', '{$date}'";
      $query .=")";
      $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
      if($db->query($query)){
@@ -35,12 +40,10 @@
        $session->msg('d',' Sorry failed to added!');
        redirect('product.php', false);
      }
-
    } else{
      $session->msg("d", $errors);
      redirect('add_product.php',false);
    }
-
  }
 
 ?>
@@ -72,8 +75,20 @@
               </div>
               <div class="form-group">
                 <div class="row">
+                
+                <div class="col-md-6">
+                    <select onchange='filter()' class="form-control" name="product-type">
+                      <option value="">Select Product Type</option>
+                    <?php 
+                    while($row=$type_result->fetch_assoc()){
+                     ?>
+                      <option value="<?php echo $row['name'] ?>">
+                        <?php echo $row['name'] ?></option>
+                    <?php } ?>
+                    </select>
+                  </div>
                   <div class="col-md-6">
-                    <select class="form-control" name="product-categorie">
+                    <select id='categorie' class="form-control" name="product-categorie">
                       <option value="">Select Product Category</option>
                     <?php  foreach ($all_categories as $cat): ?>
                       <option value="<?php echo (int)$cat['id'] ?>">
@@ -132,5 +147,13 @@
       </div>
     </div>
   </div>
-
+<script>
+function filter(){
+  select =document.getElementById('categorie');
+  option = document.createElement('option');
+  option.setAttribute('value',"")
+  option.innerHTML="ALL"
+  
+}
+</script>
 <?php include_once('layouts/footer.php'); ?>

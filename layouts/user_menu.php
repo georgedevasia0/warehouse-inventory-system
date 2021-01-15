@@ -5,6 +5,7 @@
       <span>Dashboard</span>
     </a>
   </li>
+  
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-list"></i>

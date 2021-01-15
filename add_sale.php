@@ -104,7 +104,7 @@
             </tbody>
          </table>
        </form>
-       <button class="btn btn-success col-lg-3" id="myAnchor" data-toggle="modal" data-target="#myModal"><i class="fas fa-cart-plus"></i> Checkout</button>
+       <button class="btn btn-success col-lg-3" id="myAnchor" onclick='checkout()' data-toggle="modal" data-target="#myModal"><i class="fas fa-cart-plus"></i> Checkout</button>
       </div>
     </div>
   </div>
@@ -136,14 +136,17 @@
 				<div class="col-md-9">
 					<div class="form-group">
 						<div class="checkbox">
-      						<label><input type="checkbox" value="" checked><b>GST Included</b></label>
+      						<label><input type="checkbox" onchange=gst() value="" id='gst' checked><b>GST Included</b></label>
     					</div>
 					</div>
+          <div>
+          <label style='padding-right:5px'>Discount</label><input id='disc' onchange=discount() type=Number min=0 max=100 value=5><label style='padding-left:10px'> %<label>
+          </div>
 				</div>
 				<div class="col-md-3">
 					<div class="form-group">
 						<div class="checkbox">
-							<label for="name"> <b>Total: 7500</b></label>
+							<label for="name"> <b>Total: <label id='final' style='padding:0px'><label></b></label>
     					</div>
 					</div>
 				</div>
@@ -151,7 +154,7 @@
         </div>
         <div class="modal-footer">
         
-        <button type="button" class="btn btn-primary"><i class="far fa-copy"></i> Print Reciept</button>
+        <button type="button" onclick=print_reciept() class="btn btn-primary"><i class="far fa-copy"></i> Print Reciept</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> Close</button>
           
         </div>
@@ -160,6 +163,42 @@
     </div>
   </div>
 <script type="text/javascript">
+function checkout(){
+  final=0
+  for(var i=0;i<products.length;i++){
+    final=final+Number(products[i][1])
+  }
+  discount();
+  gst();
+}
+function discount(){
+  disc=document.getElementById('disc').value;
+  disc=Number(disc);
+  final_discount=final-(final*disc/100);
+  gst();
+}
+function print_reciept(){
+  name=document.getElementById('name').value;
+  address= document.getElementById('address').value;
+  if (name==""||address==""){
+    alert('name and address required')
+    return
+  }
+  items=JSON.stringify(products);
+  window.location.href='receipt.php?name='+name+"&address="+address+"&items="+items+"&d="+disc+"&final="+final;
+}
+function gst(){
+  
+  final_with_gst=final_discount+(final_discount*18/100)
+
+  if(document.getElementById('gst').checked)
+  {
+    document.getElementById('final').innerHTML=Math.round(final_with_gst)+' Rs'
+  }
+  else{
+    document.getElementById('final').innerHTML=Math.round(final_discount)+' Rs'
+  }
+}
 products=[]
 var table = document.getElementById("item_table");
 function reset(){
@@ -201,6 +240,7 @@ product=[];
 product.push(text);
 product.push(cell2.innerHTML);
 product.push(cell3.innerHTML);
+product.push(cell4.innerHTML);
 products.push(product);
 button = document.createElement('button');
 button.classList.add('btn','btn-danger');
@@ -225,7 +265,6 @@ button.onclick=function(){
 cell5.appendChild(button);
 }
 selection=document.getElementById('select2');
-console.log(items);
 for(var i =0;i<items.length;i++){
   option=document.createElement('option');
   option.setAttribute('value',items[i][3]);

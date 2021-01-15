@@ -77,7 +77,7 @@ if(!$product){
               </div>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-md-6">
+                <div class="col-md-6">
                     <select class="form-control" name="product-categorie">
                     <option value=""> Select a categorie</option>
                    <?php  foreach ($all_categories as $cat): ?>
@@ -87,14 +87,15 @@ if(!$product){
                  </select>
                   </div>
                   <div class="col-md-6">
-                    <select class="form-control" name="product-photo">
-                      <option value=""> No image</option>
-                      <?php  foreach ($all_photo as $photo): ?>
-                        <option value="<?php echo (int)$photo['id'];?>" <?php if($product['media_id'] === $photo['id']): echo "selected"; endif; ?> >
-                          <?php echo $photo['file_name'] ?></option>
-                      <?php endforeach; ?>
-                    </select>
+                    <select class="form-control" name="product-categorie">
+                    <option value=""> Select a categorie</option>
+                   <?php  foreach ($all_categories as $cat): ?>
+                     <option value="<?php echo (int)$cat['id']; ?>" <?php if($product['categorie_id'] === $cat['id']): echo "selected"; endif; ?> >
+                       <?php echo remove_junk($cat['name']); ?></option>
+                   <?php endforeach; ?>
+                 </select>
                   </div>
+                  
                 </div>
               </div>
 

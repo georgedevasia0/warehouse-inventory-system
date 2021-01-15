@@ -5,6 +5,13 @@
       <span>Dashboard</span>
     </a>
   </li>
+  
+  <li>
+    <a href="type.php" >
+      <i class="glyphicon glyphicon-indent-left"></i>
+      <span>Product Types</span>
+    </a>
+  </li>
   <li>
     <a href="categorie.php" >
       <i class="glyphicon glyphicon-indent-left"></i>
