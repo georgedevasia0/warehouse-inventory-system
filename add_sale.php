@@ -59,6 +59,30 @@
 ?>
 <?php include_once('layouts/header.php'); ?>
 
+  <div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="row well"  style="background-color:white;">
+					<h3 class="text-primary font-weight-bold" style="font-weight:700">Recipient Details</h3><hr style="border-top: 1px solid #3498DB;">
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="name">Name:</label>
+								<input type="text" class="form-control organisation" id="name" placeholder="Name">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="addres">Address</label>
+								<textarea rows="4" class="form-control website" id="address" placeholder="Address"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+    </div>
+  </div>
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-default">
@@ -81,6 +105,7 @@
             <tbody id='item_body'> 
             
               <td  style="width:250px;">
+
                   <div class="row ">
                     <div class="col-sm-12 col-md-12 col-lg-12 ">
                             <form>
@@ -100,11 +125,14 @@
               <td id='total' style="width:150px;"></td>
               <td>
               <button onclick=add_item(); class="btn btn-primary"><i class="fas fa-plus"></i> Add Item</button>
+
              </td>
             </tbody>
          </table>
        </form>
        <button class="btn btn-success col-lg-3" id="myAnchor" onclick='checkout()' data-toggle="modal" data-target="#myModal"><i class="fas fa-cart-plus"></i> Checkout</button>
+
+       <button onclick=checkout();>checkout</button>
       </div>
     </div>
   </div>
