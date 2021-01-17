@@ -72,12 +72,13 @@
     margin-bottom: 20px
 }
 
-.invoice table td,.invoice table th {
+.invoice table th {
     padding: 15px;
-    background: #eee;
-    border-bottom: 1px solid #fff
+    border-bottom: 1px solid rgb(122, 120, 120)
 }
-
+.invoice table td{
+    padding: 15px;
+}
 .invoice table th {
     white-space: nowrap;
     font-weight: 400;
@@ -101,13 +102,14 @@
     font-size: 1.6em;
 
 }
-
+.border25{
+    border-bottom: 1px solid rgb(122, 120, 120)
+}
 .invoice table .unit {
-    background: #ddd
+    background: rgb(255, 255, 255)
 }
 
 .invoice table .total {
-;
     color: #fff
 }
 

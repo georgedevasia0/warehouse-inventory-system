@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 <?php
   $page_title = 'All sale';
   require_once('includes/load.php');
@@ -22,8 +24,23 @@ $sales = find_all_sale();
             <span>All Sales</span>
           </strong>
           <div class="pull-right">
-            <a href="add_sale.php" class="btn btn-primary">Add sale</a>
+            <a href="add_sale.php" class="btn btn-primary mx-5">Add sale <i class="fas fa-plus"></i></a>
           </div>
+          
+          <div class="pull-right">
+            <a href="add_sale.php" class="btn btn-primary" style="margin:0 10px 0 10px;">Search <i class="fab fa-searchengin"></i></a>
+          </div>
+
+          <div class="form-group pull-right">
+            <input type="text" class="form-control" style="padding:6px 0 6px 10px;" id="usr" placeholder="Enter No">
+          </div>
+
+          <p class="pull-right" style="font-weight:700;padding:6px 10px 6px 10px;">OR</p>
+
+          <div class="form-group pull-right">
+            <input type="date" class="form-control" id="date" style="padding:0 0 6px 10px;" placeholder="Enter Date">
+          </div>
+
         </div>
         <div class="panel-body">
           <table class="table table-bordered table-striped">

@@ -16,9 +16,20 @@ $final_with_gst=$final_with_discount-$gst_amount;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>-->
     <link rel="stylesheet" href="libs/css/invoice.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><title>Receipt</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <title>Receipt</title>
+    <style type="text/css">
+        .shut{
+                display:inline;
+            }
+        @media print
+            {
+            .shut{ display:none; }
+            }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -41,7 +52,8 @@ $final_with_gst=$final_with_discount-$gst_amount;
                             <div class="col company-details">
                                 <h2 class="name">
                                                       
-<button onclick=print()>Print</button>
+                            <button onclick="print();" class="shut btn btn-primary mr-5 px-4">Print <i class="fa fa-print" aria-hidden="true"></i>
+</button>
                                     <a>
                                    Praveen Watch Works
                                     </a>
@@ -80,7 +92,7 @@ $final_with_gst=$final_with_discount-$gst_amount;
                             <?php
                             $index=1;
                             foreach($items as $item){
-                                echo "<tr>
+                                echo "<tr class='border25'>
                                 <td>$index</td>
                                 <td class='text-left'>
                                     $item[0]
@@ -130,12 +142,15 @@ $final_with_gst=$final_with_discount-$gst_amount;
             </div>
         </div>
     </div>
-<script>
-function print(){
-
-    window.print();
-}
-</script>
+    <script>
+        function print(){
+            newwindow=window.open();
+            newdocument=newwindow.document;
+            newdocument.write(htmlContent);
+            newdocument.close();
+            }
+        }
+        </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 </html>

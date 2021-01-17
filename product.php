@@ -13,19 +13,19 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
-        <div>
-        <select id='select_cat' onchange='change_category()'>
-        <option value="None" >All</option>
-        <?php
-        $cats=array();
-          foreach ($products as $product){
-            
-            if(!in_array($product['categorie'],$cats)){
-              array_push($cats,$product['categorie']) ?>
-                      <option value="<?php echo $product['categorie'] ?>">
-                        <?php echo $product['categorie'] ?></option>
-                    <?php }} ?>
-        </select>
+        <div class="col-lg-3">
+          <select class="form-control" id='select_cat' onchange='change_category()'>
+          <optionvalue="None" >All</option>
+          <?php
+          $cats=array();
+            foreach ($products as $product){
+
+              if(!in_array($product['categorie'],$cats)){
+                array_push($cats,$product['categorie']) ?>
+                        <option value="<?php echo $product['categorie'] ?>">
+                          <?php echo $product['categorie'] ?></option>
+                      <?php }} ?>
+          </select>
         </div>
          <div class="pull-right">
            <a href="add_product.php" class="btn btn-primary">Add New</a>

@@ -132,7 +132,7 @@
        </form>
        <button class="btn btn-success col-lg-3" id="myAnchor" onclick='checkout()' data-toggle="modal" data-target="#myModal"><i class="fas fa-cart-plus"></i> Checkout</button>
 
-       <button onclick=checkout();>checkout</button>
+       <!--<button onclick=checkout();>checkout</button>-->
       </div>
     </div>
   </div>
